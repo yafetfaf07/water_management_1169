@@ -1,0 +1,52 @@
+table {
+    width: 80%;
+    margin:0 auto;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+* {
+    background-color: rgb(241, 237, 237);
+}
+
+dialog div {
+    padding: 10px;
+}
+
+.bill-card * {
+    background-color: white;
+
+}
+.bill-card div {
+    display: flex ;
+    justify-content: space-between;
+    padding:10px;
+}
+.bill-card div span:first-child{
+    font-weight: 600;
+    font-size:1.1rem;
+}
+
+.bill-card div span:nth-child(2) {
+    font-size: 1.1rem;
+}
+.paid {
+    background-color: rgb(146, 207, 146);
+    color: green;
+    padding: 8px;
+    font-weight: 600;
+}
+.pending {
+    background-color: rgb(255, 255, 170);
+    color: yellow;
+    padding: 8px;
+    font-weight: 600;
+}
+.unpaid {
+    background-color: rgb(237, 182, 182);
+    color: red;
+    padding: 8px;
+    font-weight: 600;
+}
