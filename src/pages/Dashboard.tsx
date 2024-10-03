@@ -1,14 +1,17 @@
 import { DollarSign } from "lucide-react";
 import "../App.css";
-import { useRef } from "react";
 import BillCard from "../components/BillCard";
+import { useContext } from "react";
+import userContext from "../context/UserContext";
 const Dashboard = () => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const context = useContext(userContext);
+  console.log("Dashboard-page: ",context?.user )
+  const userName = context?.user?.user_name
   return (
     <>
       <section>
         <nav className="flex flex-col justify-between items-center bg-white p-3">
-          <h2 className="bg-white font-semibold text-2xl">Yosef K.</h2>
+          <h2 className="bg-white font-semibold text-2xl">{userName}</h2>
           <div className="flex items-center bg-white ">
             <input
               type="text"

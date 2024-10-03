@@ -8,7 +8,7 @@ h1 {
 }
 
 * {
-    background-color: rgb(241, 237, 237);
+    background-color: whitesmoke;
 }
 
 dialog div {
@@ -39,8 +39,8 @@ dialog div {
     font-weight: 600;
 }
 .pending {
-    background-color: rgb(255, 255, 170);
-    color: yellow;
+    background-color: rgb(237, 237, 81);
+    color: rgb(91, 91, 0);
     padding: 8px;
     font-weight: 600;
 }

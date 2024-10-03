@@ -1,17 +1,33 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 interface DatatoPass {
   status: string;
 }
 const BillCard: React.FC<DatatoPass> = ({ status }) => {
   const ref = useRef<HTMLElement>(null);
-  
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (status === "PAID") {
+      ref.current?.classList.add("paid");
+    } else if (status === "PENDING") {
+      ref.current?.classList.add("pending");
+    } else if (status === "UNPAID") {
+      ref.current?.classList.add("unpaid");
+    }
+  }, []);
   const btn = () => {
     console.log(ref.current?.classList);
   };
   return (
-    <div className="  rounded-md w-[100%] bill-card md:w-[370px]  ">
+    <div
+      className="  rounded-md w-[100%] bill-card md:w-[370px]  "
+      onClick={() => {
+        if (status === "UNPAID") navigate("/payment");
+        else if (status === "PAID") console.log("PAID BABY");
+        else if (status === "PENDING") console.log("You just gotta wait bruv");
+      }}
+    >
       <div>
         <span>Bill name:</span>
         <span>Mesk, 2017</span>

@@ -2,7 +2,9 @@ import { useState } from "react";
 import pic from "../assets/images/pexels-sora-shimazaki-5668849.jpg";
 import { supabase } from "../createClient";
 import { useNavigate } from "react-router-dom";
+import Login from "../components/Login";
 const Registration = () => {
+  const[login,setlogin] = useState<boolean>(true);
   const navigate = useNavigate();
   const floorList = [];
   for (let i = 1; i < 14; i++) {
@@ -26,6 +28,9 @@ const Registration = () => {
     user_name:"",
     password:""
   })
+  const changeToRegister = () => {
+    setlogin(false);
+  }
   // console.log(users);
 
   const RegisterBtn = async() => {
@@ -39,10 +44,18 @@ const Registration = () => {
     
   }
 
+  if(login) {
+    return (
+      <>
+      <Login register={changeToRegister}  />
+      </>
+    )
+  }
+else {
   return (
     <>
       <section className="flex flex-col ">
-        <div className="w-[90%] mx-auto my-0 md:grid-cols-2 ">
+        <div className="w-[90%] mx-auto my-0 ">
           <h2 className="text-center text-[30px] p-5 font-bold">
             Create Your Account
           </h2>
@@ -172,7 +185,7 @@ const Registration = () => {
             <span className="text-gray-400 text-center mt-2">
               Already have an account?{" "}
               <span className="text-black font-semibold" onClick={() => {
-                navigate('/dashboard')
+                setlogin(true);
               }}>Sign in</span>
             </span>
           </div>
@@ -183,5 +196,8 @@ const Registration = () => {
       </section>
     </>
   );
+
+}
+
 };
 export default Registration;

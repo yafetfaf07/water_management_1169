@@ -1,7 +1,12 @@
-import { RouterProvider } from "react-router-dom"
-import routes from "./routes"
+import { RouterProvider } from "react-router-dom";
+import routes from "./routes";
+import UserContextProvider from "./context/UserContextProvider";
 const App = () => {
-  return <RouterProvider router={routes} />
-}
+  return (
+    <UserContextProvider>
+      <RouterProvider router={routes} />
+    </UserContextProvider>
+  );
+};
 
-export default App
+export default App;
