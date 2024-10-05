@@ -4,26 +4,29 @@ import { useContext, useState } from "react";
 interface Bill {
 price:number,
 transaction_no:string,
-exchange:string,
-password:string,
+user_exchange:string,
+// password:string,
 uid:string | undefined
 }
 const PayingPage = () => {
   const userData = useContext(userContext);
-  console.log("Paying page: ",userData?.user);
+  // console.log("Paying page: ",userData?.user);
   const[bill,setbill] = useState<Bill>({
     price:125,
     transaction_no:"",
-    exchange:"",
-    password:"",
-    uid:""
+    user_exchange:"",
+    // password:"",
+    uid:userData?.user?.id
   });
 
  
   
 
   const Pay = async() => {
-    // const {data} = await supabase.from('bill').insert()
+    const {data,error} = await supabase.from('bill').insert(bill)
+    if(error) {
+      console.log("Error: ", error);
+    }
     
   }
   return (
@@ -67,13 +70,13 @@ const PayingPage = () => {
               className="border border-gray-300 p-2"
               onChange={(e) => {
                 setbill((prevState) => ({
-                  ...prevState,exchange:e.target.value
+                  ...prevState,user_exchange:e.target.value
                 }))
               }}
             />
           </div>{" "}
         
-          <div className="flex flex-col mt-5">
+          {/* <div className="flex flex-col mt-5">
             <span>Password</span>
             <input
               type="password"
@@ -88,9 +91,10 @@ const PayingPage = () => {
           }}
               
             />
-          </div>{" "}
+          </div>{" "} */}
           <div className="flex flex-col mt-5">
             <button className="bg-black text-white p-2 font-semibold  hover:opacity-80 " onClick={() => {
+              Pay()
             }}>
               Pay
             </button>
