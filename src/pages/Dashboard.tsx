@@ -1,12 +1,25 @@
 import { DollarSign } from "lucide-react";
 import "../App.css";
 import BillCard from "../components/BillCard";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import userContext from "../context/UserContext";
+import { supabase } from "../createClient";
 const Dashboard = () => {
   const context = useContext(userContext);
-  console.log("Dashboard-page: ",context?.user )
-  const userName = context?.user?.user_name
+  console.log("Dashboard-page: ", context?.user);
+  // localStorage.setItem('user-name',context?.user?.user_name as string)
+  // localStorage.setItem('user-id',context?.user?.id as string)
+  
+  const userName = localStorage.getItem('user-name')
+  useEffect(() => {
+const fetchBill = async () => {
+  const id = localStorage.getItem('user-id')
+
+  const {data,error} = await supabase.from('bill').select('*').eq('uid',id)
+  console.log("Bill: ",data);
+}
+fetchBill()
+  }, []);
   return (
     <>
       <section>
@@ -47,11 +60,10 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="flex flex-wrap gap-5 w-[90%] mx-auto my-0 justify-center  mt-5 md:w-[85%] gap-10 p-1 ">
-
           <BillCard status="PAID" />
           <BillCard status="UNPAID" />
           <BillCard status="PENDING" />
-          <BillCard status="PENDING"/>
+          <BillCard status="PENDING" />
           <BillCard status="PAID" />
           <BillCard status="UNPAID" />
         </div>

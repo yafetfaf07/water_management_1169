@@ -33,8 +33,12 @@ const Login: React.FC<toogler> = ({ register }) => {
       const userData = data.data;
       
       context?.setuser({id:userData[0].id, user_name:userData[0].user_name})
-      
-      
+        console.log("User Data from login for the purpose of localstroage: ",context?.user?.user_name);
+        if(context?.user?.user_name && context.user.id) {
+          localStorage.setItem('user-id',context.user.id)          
+          localStorage.setItem('user-name',context?.user?.user_name)
+        }
+
         navigate("/dashboard");
 
      
