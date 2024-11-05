@@ -1,59 +1,60 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import userContext from "../context/UserContext";
 interface DatatoPass {
-  status: string;
+  bill_name:string;
+  price:number;
+  createdDate:string;
+  id:string
 }
-const BillCard: React.FC<DatatoPass> = ({ status }) => {
+const BillCard: React.FC<DatatoPass> = ({  bill_name, price, createdDate, id }) => {
+  const date = new Date(createdDate);
+  const options: Intl.DateTimeFormatOptions = {month:"short", day:'numeric', year:"numeric"}
+  const formattedDate=date.toLocaleString("en-US",options);
+  const context = useContext(userContext);
+  
   const ref = useRef<HTMLElement>(null);
   const navigate = useNavigate();
   useEffect(() => {
-    if (status === "PAID") {
-      ref.current?.classList.add("paid");
-    } else if (status === "PENDING") {
-      ref.current?.classList.add("pending");
-    } else if (status === "UNPAID") {
-      ref.current?.classList.add("unpaid");
-    }
+    
   }, []);
   const btn = () => {
     console.log(ref.current?.classList);
   };
   return (
     <div
-      className="  rounded-md w-[100%] bill-card md:w-[370px]  "
+      className="rounded-md w-[100%] bill-card md:w-[370px]"
       onClick={() => {
-        if (status === "UNPAID") navigate("/payment");
-        else if (status === "PAID") console.log("PAID BABY");
-        else if (status === "PENDING") console.log("You just gotta wait bruv");
+      navigate('/payment',{state:{bid:id},})
       }}
     >
       <div>
         <span>Bill name:</span>
-        <span>Mesk, 2017</span>
+        <span>{bill_name}</span>
       </div>
       <div>
         <span>Date: </span>
-        <span>Sept 12,2024</span>
+        <span>{formattedDate}</span>
       </div>
       <div>
         <span>Price: </span>
-        <span>275 Br</span>
+        <span>{price}</span>
       </div>
       <div>
         <span>Status: </span>
-        <span
+        <span className="text-red-600 bg-red-200 font-semibold p-2"
           ref={ref}
           onClick={() => {
             btn();
           }}
         >
-          {status}
+          UNPAID
         </span>
       </div>
       <div>
         <span>Exchange: </span>
-        <span>telebirr</span>
+        <span>N/A</span>
       </div>
     </div>
   );

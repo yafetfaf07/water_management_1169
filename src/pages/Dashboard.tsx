@@ -1,12 +1,27 @@
 import { DollarSign } from "lucide-react";
 import "../App.css";
 import BillCard from "../components/BillCard";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import userContext from "../context/UserContext";
 import { supabase } from "../createClient";
 const Dashboard = () => {
   const context = useContext(userContext);
+  const id = localStorage.getItem('user-id')
+
   console.log("Dashboard-page: ", context?.user);
+  interface Bill {
+    id:string;
+    created_at:string;
+    price:number;
+    bill_name:string;
+  }
+  const [bills,setbills] = useState<Bill[]>([
+   { bill_name:"",
+    id:"",
+    price:0,
+    created_at:""
+  }
+  ]);
   // localStorage.setItem('user-name',context?.user?.user_name as string)
   // localStorage.setItem('user-id',context?.user?.id as string)
   
@@ -15,7 +30,11 @@ const Dashboard = () => {
 const fetchBill = async () => {
   const id = localStorage.getItem('user-id')
 
-  const {data,error} = await supabase.from('bill').select('*').eq('uid',id)
+  const {data} = await supabase.from('bill').select('*')
+  if(data) 
+    setbills(data);
+ 
+  
   console.log("Bill: ",data);
 }
 fetchBill()
@@ -60,12 +79,12 @@ fetchBill()
           </div>
         </div>
         <div className="flex flex-wrap gap-5 w-[90%] mx-auto my-0 justify-center  mt-5 md:w-[85%] gap-10 p-1 ">
-          <BillCard status="PAID" />
-          <BillCard status="UNPAID" />
-          <BillCard status="PENDING" />
-          <BillCard status="PENDING" />
-          <BillCard status="PAID" />
-          <BillCard status="UNPAID" />
+        
+          {
+            bills.map((b) => {
+              return <BillCard bill_name={b.bill_name} price={b.price} createdDate={b.created_at} id={b.id}/>
+            })
+          }
         </div>
       </section>
     </>

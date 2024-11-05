@@ -1,29 +1,35 @@
+import { useLocation } from "react-router-dom";
 import userContext from "../context/UserContext";
 import { supabase } from "../createClient";
 import { useContext, useState } from "react";
 interface Bill {
-price:number,
+// price:number,
 transaction_no:string,
 user_exchange:string,
 // password:string,
-uid:string | undefined
+uid:string 
+bid:string
 }
 const PayingPage = () => {
   const userData = useContext(userContext);
+  const id = localStorage.getItem('user-id');
+  
+
   // console.log("Paying page: ",userData?.user);
+  const location = useLocation();
   const[bill,setbill] = useState<Bill>({
-    price:125,
     transaction_no:"",
     user_exchange:"",
     // password:"",
-    uid:userData?.user?.id
+    uid: id as string,
+    bid:location.state.bid
   });
 
  
   
 
   const Pay = async() => {
-    const {data,error} = await supabase.from('bill').insert(bill)
+    const {data,error} = await supabase.from('bill_reference').insert(bill)
     if(error) {
       console.log("Error: ", error);
     }
@@ -37,7 +43,7 @@ const PayingPage = () => {
           
           <div className="flex flex-col mt-5">
             <span>Price</span>
-            <input
+            {/* <input
               type="text"
               placeholder="Enter price"
               className="border border-gray-300 p-2"
@@ -47,7 +53,7 @@ const PayingPage = () => {
                 }))
               }
             }
-            />
+            /> */}
           </div>{" "}
           <div className="flex flex-col mt-5">
             <span>Transaction No</span>
