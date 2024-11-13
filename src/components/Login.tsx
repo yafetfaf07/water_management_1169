@@ -37,9 +37,10 @@ const Login: React.FC<toogler> = ({ register }) => {
         if(context?.user?.user_name && context.user.id) {
           localStorage.setItem('user-id',context.user.id)          
           localStorage.setItem('user-name',context?.user?.user_name)
+	  navigate("/dashboard");
         }
 
-        navigate("/dashboard");
+  
 
      
     }
