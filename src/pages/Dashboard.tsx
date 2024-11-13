@@ -8,12 +8,20 @@ const Dashboard = () => {
   const context = useContext(userContext);
   const id = localStorage.getItem('user-id')
 
-  console.log("Dashboard-page: ", context?.user);
+  console.log("Dashboard-page: ", id);
   interface Bill {
     id:string;
     created_at:string;
     price:number;
     bill_name:string;
+  }
+  interface BillWithStatus {
+    bid:string;
+    uid:string;
+    transaction_no:string;
+    user_exchange:string;
+    created_at:string;
+    status:string;
   }
   const [bills,setbills] = useState<Bill[]>([
    { bill_name:"",
@@ -22,20 +30,39 @@ const Dashboard = () => {
     created_at:""
   }
   ]);
+  const[billWithStatus,setbillWithStatus] = useState<BillWithStatus[]>([
+    {
+      bid:"",
+      status:"",
+      uid:"",
+      transaction_no:"",
+      created_at:"",
+      user_exchange:""
+    }
+  ])
   // localStorage.setItem('user-name',context?.user?.user_name as string)
   // localStorage.setItem('user-id',context?.user?.id as string)
   
   const userName = localStorage.getItem('user-name')
   useEffect(() => {
 const fetchBill = async () => {
-  const id = localStorage.getItem('user-id')
+  // const id = localStorage.getItem('user-id')
 
   const {data} = await supabase.from('bill').select('*')
   if(data) 
     setbills(data);
  
+  const billStatusData = await supabase.from("bill_reference").select("*").eq('uid',id);
+  if(billStatusData.error) {
+    console.log("Bill Error: ",billStatusData.error);
+    
+  }
+  if(billStatusData.data)
+    setbillWithStatus(billStatusData.data);
   
   console.log("Bill: ",data);
+  console.log("BillStatus Data: ",billStatusData.data);
+  
 }
 fetchBill()
   }, []);
@@ -82,7 +109,13 @@ fetchBill()
         
           {
             bills.map((b) => {
-              return <BillCard bill_name={b.bill_name} price={b.price} createdDate={b.created_at} id={b.id}/>
+              return <BillCard bill_name={b.bill_name} price={b.price} createdDate={b.created_at} id={b.id} status="UNPAID"/>
+            })
+          }
+          <p>Pending & Paid bills</p>
+          {
+            billWithStatus.map((b,i) => {
+              return <BillCard bill_name={b.bid} id={b.bid} createdDate={b.created_at} price={125} key={i} status={b.status} />
             })
           }
         </div>
