@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
 import { supabase } from "../createClient";
 import { useNavigate } from "react-router-dom";
-import { Alert } from "antd";
 import userContext from "../context/UserContext";
+import { Alert, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react";
+
+
 interface toogler {
   register: () => void;
 }
 
-
 const Login: React.FC<toogler> = ({ register }) => {
   const [username, setusername] = useState<string>("");
   const [password, setpassword] = useState<string>("");
-  const context = useContext(userContext)
-
+  const[isOpen, setisOpen] = useState<boolean>(true);
+  const context = useContext(userContext);
   const navigate = useNavigate();
 
   const loginBtn = async () => {
@@ -23,32 +25,50 @@ const Login: React.FC<toogler> = ({ register }) => {
       .ilike("password", password);
     console.log(data.data);
 
-    
-    
     if (data.data?.length == 0) {
       console.log("Invalid user name or password");
+      setisOpen(false);
+    
+    
     } else if (data.error) {
       console.log("Error: ", data.error);
     } else {
       const userData = data.data;
-      
-      context?.setuser({id:userData[0].id, user_name:userData[0].user_name})
-        console.log("User Data from login for the purpose of localstroage: ",context?.user?.user_name);
-        if(context?.user?.user_name && context.user.id) {
-          localStorage.setItem('user-id',context.user.id)          
-          localStorage.setItem('user-name',context?.user?.user_name)
-	  navigate("/dashboard");
-        }
 
-  
-
-     
+      context?.setuser({
+        id: userData[0].id,
+        user_name: userData[0].user_name,
+      });
+      console.log(
+        "User Data from login for the purpose of localstroage: ",
+        context?.user?.user_name
+      );
+      if (context?.user?.user_name && context.user.id) {
+        localStorage.setItem("user-id", context.user.id);
+        localStorage.setItem("user-name", context?.user?.user_name);
+        alert("success")
+        navigate("/dashboard");
+      }
     }
   };
 
   return (
     <>
-      <Alert type="success" message="Error" closable={true}></Alert>                                                            
+ <Alert hidden={isOpen} variant="destructive">
+  <div className="flex items-center justify-between">
+  <AlertCircle></AlertCircle>
+  <AlertTitle>Invalid User</AlertTitle>
+  <button className="bg-yellow w-10 float-right" onClick={() => {
+
+    setisOpen(true)
+  }}>x</button>
+
+  </div>
+ 
+
+</Alert>
+
+    
       <div className="w-[90%] mx-auto my-0 ">
         <h2 className="text-center text-[30px] p-5 font-bold">Welcome, back</h2>
         <div className="flex flex-col mt-5">
