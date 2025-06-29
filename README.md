@@ -1,50 +1,65 @@
-# React + TypeScript + Vite
+Water Pump Payment Web Application
+Project Description
+This project is a web application designed to facilitate monthly payments for a community water pump service. It provides a platform for users to manage their water consumption payments, ensuring efficient and transparent billing for community members.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features
+User Authentication: Secure login and user registration.
 
-Currently, two official plugins are available:
+Payment Management: Allows users to view outstanding balances and make monthly payments.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Payment History: Records and displays past payment transactions for users.
 
-## Expanding the ESLint configuration
+Admin Dashboard (Optional/Future): Functionality for administrators to manage users, tariffs, and view overall payment status.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Responsive Design: Optimized for use on various devices (desktop, tablet, mobile).
 
-- Configure the top-level `parserOptions` property like this:
+Technologies Used
+Frontend: React
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Database: Supabase
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Styling: Tailwind CSS 
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+Setup and Installation
+Prerequisites
+Node.js (LTS version recommended, needed for npm/Yarn)
+
+npm or Yarn
+
+Supabase project (with database set up)
+
+Installation
+Clone the repository:
+
+git clone [repository-url]
+cd [project-folder]
+
+Install dependencies:
+
+npm install
+
+
+Configure Environment Variables:
+Create a .env file in the project's root directory with the following variables:
+
+REACT_APP_SUPABASE_URL=your_supabase_project_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+# Add any payment gateway specific API keys here (e.g., REACT_APP_STRIPE_KEY)
+
+Run the application:
+
+npm start
+# or yarn start
+
+This will typically open the app in your browser at http://localhost:3000.
+
+How to Use
+Register/Login: New users can sign up, existing users can log in.
+
+View Balance: Once logged in, users can see their current monthly water bill.
+
+Make Payment: Users can proceed to make payments using the integrated payment gateway.
+
+View History: Access a record of all past payments.
