@@ -33,27 +33,16 @@ Supabase project (with database set up)
 Installation
 Clone the repository:
 
-git clone [repository-url]
-cd [project-folder]
+
 
 Install dependencies:
 
 npm install
 
-
-Configure Environment Variables:
-Create a .env file in the project's root directory with the following variables:
-
-REACT_APP_SUPABASE_URL=your_supabase_project_url
-REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
-# Add any payment gateway specific API keys here (e.g., REACT_APP_STRIPE_KEY)
-
-Run the application:
-
 npm start
-# or yarn start
 
-This will typically open the app in your browser at http://localhost:3000.
+
+This will typically open the app in your browser at http://localhost:5173.
 
 How to Use
 Register/Login: New users can sign up, existing users can log in.
